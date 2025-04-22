@@ -22,6 +22,7 @@
 # is strongly recommended that you only disable WITH_TLS if you are not using
 # password authentication at all.
 WITH_TLS:=yes
+# WITH_TLS:=no
 
 # Comment out to disable TLS/PSK support in the broker and client. Requires
 # WITH_TLS=yes.
@@ -109,6 +110,7 @@ WITH_UNIX_SOCKETS:=yes
 
 # Build mosquitto_sub with cJSON support
 WITH_CJSON:=yes
+# WITH_CJSON:=no
 
 # Build mosquitto with support for the $CONTROL topics.
 WITH_CONTROL:=yes
@@ -148,6 +150,22 @@ DB_HTML_XSL=man/html.xsl
 
 UNAME:=$(shell uname -s)
 ARCH:=$(shell uname -p)
+
+#arm32
+CROSS_COMPILE:=/home/quan/share/sktc0405/tools/gcc-11.1.0-20210608-sigmastar-glibc-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+#arm64
+# CROSS_COMPILE:=/home/quan/share/zc0203_skdl0401p/tools/gcc-10.2.1-20210303-sigmastar-glibc-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+CC:=gcc
+CXX:=g++
+
+# 指定ssl库、cJSON库的头文件和库文件
+CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ssl_result/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/include
+
+LDFLAGS+= -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ssl_result/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/lib -lssl -lcrypto -dl
+
+# 指定安装目录
+DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result
+
 
 ifeq ($(UNAME),SunOS)
 	ifeq ($(CC),cc)
