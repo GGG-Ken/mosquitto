@@ -1,3 +1,4 @@
+可执行文件在 ken_result/usr/local/sbin
 运行./mosquitto -c mosquitto.conf
 
 
