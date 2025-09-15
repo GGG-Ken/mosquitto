@@ -443,7 +443,7 @@ static int pid__write(void)
 			fprintf(pid, "%d", getpid());
 			fclose(pid);
 		}else{
-			log__printf(NULL, MOSQ_LOG_ERR, "Error: Unable to write pid file.");
+			log__printf(NULL, MOSQ_LOG_ERR, "Error: Unable to write pid file=%s.", db.config->pid_file);
 			return 1;
 		}
 	}

@@ -152,19 +152,29 @@ UNAME:=$(shell uname -s)
 ARCH:=$(shell uname -p)
 
 #arm32
-CROSS_COMPILE:=/home/quan/share/sktc0405/tools/gcc-11.1.0-20210608-sigmastar-glibc-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+# CROSS_COMPILE:=/home/quan/share/sktc0405/tools/gcc-11.1.0-20210608-sigmastar-glibc-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+# CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm32/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm32/include
+# LDFLAGS+= -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm32/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm32/lib -lssl -lcrypto -dl
+# DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm32
+
 #arm64
-# CROSS_COMPILE:=/home/quan/share/zc0203_skdl0401p/tools/gcc-10.2.1-20210303-sigmastar-glibc-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+CROSS_COMPILE:=/home/quan/share/skdl0402p/tools/gcc-10.2.1-20210303-sigmastar-glibc-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/include
+LDFLAGS+= -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/lib -lssl -lcrypto -dl
+DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm64
+
 CC:=gcc
 CXX:=g++
 
 # 指定ssl库、cJSON库的头文件和库文件
-CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ssl_result/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/include
+# CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ssl_result/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/include
+#这里要跟ssl仓库对应
+# CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/include
 
-LDFLAGS+= -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ssl_result/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/lib -lssl -lcrypto -dl
+# LDFLAGS+= -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/lib -lssl -lcrypto -dl
 
 # 指定安装目录
-DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result
+DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm64
 
 
 ifeq ($(UNAME),SunOS)
