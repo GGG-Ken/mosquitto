@@ -151,6 +151,28 @@ DB_HTML_XSL=man/html.xsl
 UNAME:=$(shell uname -s)
 ARCH:=$(shell uname -p)
 
+
+ARCH ?= arm64
+# 根据 ARCH 选择对应的交叉编译配置
+ifeq ($(ARCH), arm32)
+    # arm32 配置
+    CROSS_COMPILE := /home/quan/share/sktc0405/tools/gcc-11.1.0-20210608-sigmastar-glibc-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+    CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm32/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm32/include
+    LDFLAGS += -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm32/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm32/lib -lssl -lcrypto -dl
+    DESTDIR := /home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm32
+else ifeq ($(ARCH), arm64)
+    # arm64 配置（默认生效）
+    CROSS_COMPILE := /home/quan/share/skdl0402p/tools/gcc-10.2.1-20210303-sigmastar-glibc-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+    CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/include
+    LDFLAGS += -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/lib -lssl -lcrypto -dl
+    DESTDIR := /home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm64
+else
+    $(error "Unsupported ARCH: $(ARCH)! Use 'ARCH=arm32' or 'ARCH=arm64'")
+endif
+
+# 覆盖编译器：使用交叉编译工具链（根据 ARCH 自动选择）
+CC := $(CROSS_COMPILE)gcc
+CXX := $(CROSS_COMPILE)g++
 #arm32
 # CROSS_COMPILE:=/home/quan/share/sktc0405/tools/gcc-11.1.0-20210608-sigmastar-glibc-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
 # CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm32/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm32/include
@@ -158,13 +180,13 @@ ARCH:=$(shell uname -p)
 # DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm32
 
 #arm64
-CROSS_COMPILE:=/home/quan/share/skdl0402p/tools/gcc-10.2.1-20210303-sigmastar-glibc-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
-CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/include
-LDFLAGS+= -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/lib -lssl -lcrypto -dl
-DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm64
+# CROSS_COMPILE:=/home/quan/share/skdl0402p/tools/gcc-10.2.1-20210303-sigmastar-glibc-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+# CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/include
+# LDFLAGS+= -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/lib -lssl -lcrypto -dl
+# DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm64
 
-CC:=gcc
-CXX:=g++
+# CC:=gcc
+# CXX:=g++
 
 # 指定ssl库、cJSON库的头文件和库文件
 # CFLAGS += -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ssl_result/include -I/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/include
@@ -174,7 +196,7 @@ CXX:=g++
 # LDFLAGS+= -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/openssl/ken_result/arm64/lib64 -L/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/cJSON/ken_result/arm64/lib -lssl -lcrypto -dl
 
 # 指定安装目录
-DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm64
+# DESTDIR=/home/quan/share/1tmp/tftpfile/mygithub/GitsRepositories/mosquitto/ken_result/arm64
 
 
 ifeq ($(UNAME),SunOS)

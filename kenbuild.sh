@@ -5,6 +5,12 @@
 # # CROSS_COMPILE:=/home/quan/share/zc0203_skdl0401p/tools/gcc-10.2.1-20210303-sigmastar-glibc-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
 # CC:=gcc
 # CXX:=g++
+
+# 清理残留（必须执行，避免 arm64 中间文件干扰）
+make clean
+make ARCH=arm64
+make ARCH=arm64 install
+
 # make clean
-make
-make install
+# make ARCH=arm32
+# make ARCH=arm32 install
